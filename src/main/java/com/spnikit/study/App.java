@@ -6,16 +6,20 @@ import java.util.List;
 
 
 
+@FunctionalInterface
+  interface Criterion<T> {
 
-interface CarCriterion {
-
-    boolean test(Car c);
+     boolean test(T c);
 
 }
+
+
+
+
 public class App
 {
-    public static void showAll(List<Car> c){
-        for (Car elem: c){
+    public static <T>void showAll(List<T> c){
+        for (T elem: c){
             System.out.println(elem);
         }
 
@@ -23,10 +27,10 @@ public class App
     }
 
 
-    public static List<Car> getCarsByCriterion(Iterable<Car> in, CarCriterion crit) {
-        List<Car> output = new ArrayList<>();
+    public static <T> List<T> getByCriterion(Iterable<T> in, Criterion<T> crit) {
+        List<T> output = new ArrayList<>();
 
-        for(Car elem: in){
+        for(T elem: in){
             if(crit.test(elem)) {
                 output.add(elem);
 
@@ -49,8 +53,12 @@ public class App
 
         showAll(cars);
 
-        showAll(getCarsByCriterion(cars, Car.getRedCarCriterion()));
-        showAll(getCarsByCriterion(cars, Car.getGasLevelCarCriterion(5)));
+//        showAll(getByCriterion(cars, Car.getRedCarCriterion()));
+//        showAll(getByCriterion(cars, Car.getGasLevelCarCriterion(5)));
+//        cars.sort(((o1, o2) -> o1.getGasLevel() - o2.getGasLevel()));
+//        showAll(cars);
+
+        showAll(getByCriterion(cars, c -> c.getPassengers().size() == 2));
 
 
     }

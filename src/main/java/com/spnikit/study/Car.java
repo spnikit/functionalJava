@@ -62,19 +62,25 @@ public class Car {
                 '}';
     }
 
-    // --------------------- Cretirions--------------------------------------
+    // --------------------- Criterions--------------------------------------
 
-    public static CarCriterion getRedCarCriterion() {
+
+
+    public static Criterion<Car> getFourPassengerCriterion(){
+        return c -> c.passengers.size() == 4;
+    }
+
+    public static Criterion<Car> getRedCarCriterion() {
         return RED_CAR_CRITERION;
     }
 
-    private static final CarCriterion RED_CAR_CRITERION = c -> c.color.equals("Red");
+    private static final Criterion<Car> RED_CAR_CRITERION = c -> c.color.equals("Red");
 
 
 
 
-    public static CarCriterion getGasLevelCarCriterion(int threshold) {
-        return new CarCriterion() {
+    public static Criterion<Car> getGasLevelCarCriterion(int threshold) {
+        return new Criterion<Car>() {
             @Override
             public boolean test(Car c) {
                 return c.gasLevel >= threshold;
