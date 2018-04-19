@@ -1,5 +1,4 @@
 package com.spnikit.study;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,8 +49,8 @@ public class App
 
         showAll(cars);
 
-        showAll(getCarsByCriterion(cars, c -> c.getColor().equals("Black")));
-        showAll(getCarsByCriterion(cars, c -> c.getGasLevel() >= 6));
+        showAll(getCarsByCriterion(cars, Car.getRedCarCriterion()));
+        showAll(getCarsByCriterion(cars, Car.getGasLevelCarCriterion(5)));
 
 
     }

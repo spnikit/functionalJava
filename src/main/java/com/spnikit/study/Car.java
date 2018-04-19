@@ -61,4 +61,26 @@ public class Car {
                 ", trunkContents=" + (trunkContents != null ? trunkContents : " no trunk") +
                 '}';
     }
+
+    // --------------------- Cretirions--------------------------------------
+
+    public static CarCriterion getRedCarCriterion() {
+        return RED_CAR_CRITERION;
+    }
+
+    private static final CarCriterion RED_CAR_CRITERION = c -> c.color.equals("Red");
+
+
+
+
+    public static CarCriterion getGasLevelCarCriterion(int threshold) {
+        return new CarCriterion() {
+            @Override
+            public boolean test(Car c) {
+                return c.gasLevel >= threshold;
+            }
+        };
+    }
+
+
 }
