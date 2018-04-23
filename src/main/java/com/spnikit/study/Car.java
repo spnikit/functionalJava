@@ -3,6 +3,7 @@ package com.spnikit.study;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Car {
 
@@ -66,26 +67,23 @@ public class Car {
 
 
 
-    public static Criterion<Car> getFourPassengerCriterion(){
+    public static Predicate<Car> getFourPassengerCriterion(){
         return c -> c.passengers.size() == 4;
     }
 
-    public static Criterion<Car> getRedCarCriterion() {
+    public static Predicate<Car> getRedCarCriterion() {
         return RED_CAR_CRITERION;
     }
 
-    private static final Criterion<Car> RED_CAR_CRITERION = c -> c.color.equals("Red");
+    private static final Predicate<Car> RED_CAR_CRITERION = c -> c.color.equals("Red");
 
+    public static Predicate<Car> getGasLevelCarCriterion(int threshold) {
 
+        return c -> c.getGasLevel() >= threshold;
+    }
 
-
-    public static Criterion<Car> getGasLevelCarCriterion(int threshold) {
-        return new Criterion<Car>() {
-            @Override
-            public boolean test(Car c) {
-                return c.gasLevel >= threshold;
-            }
-        };
+    public static Predicate<Car> getColorCriterion(String... colors) {
+        return c -> Arrays.asList(colors).contains(c.getColor());
     }
 
 

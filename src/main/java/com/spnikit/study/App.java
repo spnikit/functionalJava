@@ -1,23 +1,28 @@
 package com.spnikit.study;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.function.ToIntFunction;
+
+
+public class App {
 
 
 
+    public static <E> ToIntFunction<E> compareWithThis(E target, Comparator<E> comp){
 
-@FunctionalInterface
-  interface Criterion<T> {
+        return x -> comp.compare(target, x);
 
-     boolean test(T c);
-
-}
+    }
 
 
+    public static <E> Predicate<E> comparesGreater(ToIntFunction<E> func) {
+        return x -> func.applyAsInt(x) < 0;
+    }
 
 
-public class App
-{
     public static <T>void showAll(List<T> c){
         for (T elem: c){
             System.out.println(elem);
@@ -27,7 +32,7 @@ public class App
     }
 
 
-    public static <T> List<T> getByCriterion(Iterable<T> in, Criterion<T> crit) {
+    public static <T> List<T> getByCriterion(Iterable<T> in, Predicate<T> crit) {
         List<T> output = new ArrayList<>();
 
         for(T elem: in){
@@ -54,15 +59,29 @@ public class App
         showAll(cars);
 
 //        showAll(getByCriterion(cars, Car.getRedCarCriterion()));
-//        showAll(getByCriterion(cars, Car.getGasLevelCarCriterion(5)));
+        // showAll(getByCriterion(cars, Car.getGasLevelCarCriterion(5)));
 //        cars.sort(((o1, o2) -> o1.getGasLevel() - o2.getGasLevel()));
 //        showAll(cars);
 
-        showAll(getByCriterion(cars, c -> c.getPassengers().size() == 2));
+        // showAll(getByCriterion(cars, c -> c.getPassengers().size() == 2));
+
+        // showAll(getByCriterion(cars, Car.getColorCriterion("Purple", "Red")));
+
+        Predicate<Car> level7 = Car.getGasLevelCarCriterion(7);
+
+        showAll(getByCriterion(cars, level7));
+        showAll(getByCriterion(cars, level7.negate()));
+
+
+        Car bert = Car.withGasColorPassengers(5, "Blue");
+
+        ToIntFunction<Car> compareWithBert = compareWithThis(bert, (c1, c2) -> c1.getGasLevel() - c2.getGasLevel());
+
+        showAll(getByCriterion(cars, comparesGreater(compareWithBert)));
+
 
 
     }
 }
 
 
-// TODO: 18.04.18 video #9 a question of ownership
