@@ -3,6 +3,7 @@ package com.spnikit.study;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public class Car {
@@ -37,6 +38,11 @@ public class Car {
 
     }
 
+
+    public Car addGas(int g) {
+        return new Car(gasLevel + g, color, passengers, trunkContents);
+    }
+
     public int getGasLevel() {
         return gasLevel;
     }
@@ -51,6 +57,11 @@ public class Car {
 
     public List<String> getTrunkContents() {
         return trunkContents;
+    }
+
+
+    public Optional<List<String>> getTrunkContentsOpt() {
+        return Optional.ofNullable(this.trunkContents);
     }
 
     @Override
